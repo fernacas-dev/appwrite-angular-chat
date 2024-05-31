@@ -20,7 +20,7 @@ export class ChatService {
   private _messages$ = new BehaviorSubject<Message[]>([]);
   readonly messages$ = this._messages$.asObservable();
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   loadMessages() {
     this.appwriteAPI.database
@@ -28,12 +28,12 @@ export class ChatService {
         this.appwriteEnvironment.databaseId,
         this.appwriteEnvironment.chatCollectionId,
         [],
-       /* 100,
-        0,
-        undefined,
-        undefined,
-        [],
-        ['ASC']*/
+        /* 100,
+         0,
+         undefined,
+         undefined,
+         [],
+         ['ASC']*/
       )
       .then((response) => {
         this._messages$.next(response.documents);
@@ -51,7 +51,7 @@ export class ChatService {
         };
 
         return this.appwriteAPI.database.createDocument(
-          this.appwriteEnvironment.databaseId, 
+          this.appwriteEnvironment.databaseId,
           this.appwriteEnvironment.chatCollectionId,
           ID.unique(),
           data,
@@ -65,11 +65,11 @@ export class ChatService {
 
   listenToMessages() {
     return this.appwriteAPI.database.client.subscribe(
-      `databases.chat.collections.messages.documents`,
+      `databases.chatdb.collections.messages.documents`,
       (res: RealtimeResponseEvent<Message>) => {
-        if (res.events.includes('databases.chat.collections.messages.documents.*.create')) {
+        if (res.events.includes('databases.chatdb.collections.messages.documents.*.create')) {
           const messages: Message[] = [...this._messages$.value, res.payload];
- 
+
           this._messages$.next(messages);
         }
       }

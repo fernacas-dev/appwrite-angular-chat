@@ -205,37 +205,38 @@ import { ChatService } from './chat.service';
 })
 export class ChatComponent implements OnInit, OnDestroy {
   messageunSubscribe!: () => void;
- form = new FormGroup({
-   message: new FormControl('', { nonNullable: true }),
- });
- user$ = this.authService.user$;
- messages$ = this.chatService.messages$;
+  form = new FormGroup({
+    message: new FormControl('', { nonNullable: true }),
+  });
+  user$ = this.authService.user$;
+  messages$ = this.chatService.messages$;
 
- constructor(
-   private authService: AuthService,
-   private chatService: ChatService
- ) {}
+  constructor(
+    private authService: AuthService,
+    private chatService: ChatService
+  ) { }
 
- ngOnInit() {
-   this.chatService.loadMessages();
-   this.messageunSubscribe = this.chatService.listenToMessages();
- }
- ngOnDestroy() {
-  this.messageunSubscribe();
-}
+  ngOnInit() {
+    this.chatService.loadMessages();
+    this.messageunSubscribe = this.chatService.listenToMessages();
+  }
+  ngOnDestroy() {
+    this.messageunSubscribe();
+  }
   sendMessage() {
     const message = this.form.controls.message.value;
-    
+
     this.chatService
-     .sendMessage(message)
-     .pipe(
-       tap(() => {
-         this.form.reset();
-       })
-     )
-     .subscribe();
+      .sendMessage(message)
+      .pipe(
+        tap(() => {
+          this.form.reset();
+        })
+      )
+      .subscribe();
   }
 
   async logout() {
+    this.authService.logout();
   }
 }
