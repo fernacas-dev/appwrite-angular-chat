@@ -1,0 +1,143 @@
+.chat-container {
+    width: 100%;
+    height: 98vh;
+    display: flex;
+    flex-direction: column;
+    background: #fcfcff;
+}
+
+.chat-header {
+    display: flex;
+    flex: none;
+    flex-direction: row;
+    justify-content: space-between;
+
+    background: #ffffff;
+    box-shadow: 0px 4px 40px rgba(55, 59, 77, 0.08);
+    width: 100%;
+    height: 60px;
+}
+
+.chat-header .title {
+    position: absolute;
+    width: 89px;
+    height: 27px;
+    left: 32px;
+    top: 17px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 150%;
+    color: #373b4d;
+}
+
+.chat-header .leave {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 16px;
+    cursor: pointer;
+
+    position: absolute;
+    width: 130px;
+    height: 41px;
+    left: 88%;
+    top: 10px;
+
+    background: #fcfcff;
+
+    border: 1px solid #e8e9f0;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+.chat-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 16px;
+    overflow: auto;
+}
+
+span.name {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 150%;
+    color: #373b4d;
+}
+
+.message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8px 8px 8px 12px;
+    margin: 16px 8px 16px 12px;
+
+    background: #ffffff;
+    box-shadow: 0px 1px 4px rgba(55, 59, 77, 0.1),
+        0px 1px 4px -1px rgba(55, 59, 77, 0.1);
+    border-radius: 0px 8px 8px 8px;
+}
+
+.incoming {
+    background: #e8e9f0;
+    align-items: flex-end;
+}
+
+.chat-message {
+    display: flex;
+    flex: none;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.chat-message form {
+    display: flex;
+    flex-direction: row;
+    width: 95%;
+}
+
+.chat-message input {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 48px;
+    margin-bottom: 4px;
+
+    background: #ffffff;
+    border: 1px solid #e8e9f0;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+.send-message {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 10px 12px 14px;
+
+    width: 48px;
+    height: 48px;
+
+    background: #da1a5b;
+    border-radius: 4px;
+}
+
+.arrow {
+    position: static;
+    width: 24px;
+    height: 24px;
+    left: 38px;
+    top: 12px;
+
+    transform: rotate(90deg);
+}
+
+.arrow path {
+    fill: #fff;
+}

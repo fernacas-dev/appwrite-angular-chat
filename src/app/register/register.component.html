@@ -1,0 +1,41 @@
+<div class="container flex flex-row justify-center mx-auto my-12">
+    <div class="my-12">
+        <span class="text-3xl text-center">Angular Chat</span>
+        <div class="mt-12 mb-0 outline-gray-500 p-12 pt-2 px-12 rounded outline">
+            <span class="text-2xl text-center mb-2">Register</span>
+            <form [formGroup]="form" class="" (ngSubmit)="register()">
+                <div class="flex flex-col my-4">
+                    <label class="text-xl my-2" for="email">Email</label>
+                    <input
+                        class="w-[350px] h-12 rounded text-xl px-2 border-b-2 border-b-black focus:border-b-transparent bg-white"
+                        type="text" id="email" formControlName="email" placeholder="johndoe@gmail.com" />
+                </div>
+
+                <div class="flex flex-col my-4">
+                    <label class="text-xl my-2" for="name">Username</label>
+                    <input
+                        class="w-[350px] h-12 rounded text-xl px-2 border-b-2 border-b-black focus:border-b-transparent bg-white"
+                        type="text" id="name" formControlName="name" placeholder="johndoe" />
+                </div>
+                <div class="flex flex-col my-4">
+                    <label class="text-xl my-2" for="password">Password</label>
+                    <input
+                        class="w-[350px] h-12 rounded text-xl px-2 border-b-2 border-b-black focus:border-b-transparent bg-white"
+                        type="text" id="password" formControlName="password" />
+                </div>
+
+                <div class="flex flex-col my-4">
+                    <label class="text-xl my-2" for="confirmPassword">Confirm Password</label>
+                    <input
+                        class="w-[350px] h-12 rounded text-xl px-2 border-b-2 border-b-black focus:border-b-transparent bg-white"
+                        type="text" id="confirmPassword" formControlName="confirmPassword" />
+                </div>
+
+                <div class="flex flex-row justify-end">
+                    <button type="submit"
+                        class="mt-8 mb-4 w-[125px] px-4 py-2 outline outline-2 rounded hover:bg-green-500">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

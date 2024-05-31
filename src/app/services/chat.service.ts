@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { ID, Models, Permission, RealtimeResponseEvent, Role } from 'appwrite';
-import { BehaviorSubject, take, concatMap, filter } from 'rxjs';
+import { BehaviorSubject, take, concatMap, filter, tap, map, switchMap } from 'rxjs';
 
-import { AppwriteApi, AppwriteEnvironment } from './appwrite';
+import { AppwriteApi, AppwriteEnvironment } from '../appwrite';
 import { AuthService } from './auth.service';
 import { environment } from 'src/environments/environment.development';
 
@@ -45,6 +45,7 @@ export class ChatService {
     return this.authService.user$.pipe(
       filter((user: any) => !!user),
       take(1),
+      switchMap((user) => !user.name ? this.appwriteAPI.account.get() : user),
       concatMap((user: any) => {
         const data = {
           user: user!.name,
