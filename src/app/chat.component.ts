@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { tap } from 'rxjs';
 import { AuthService } from './auth.service';
@@ -204,17 +204,16 @@ import { ChatService } from './chat.service';
   ],
 })
 export class ChatComponent implements OnInit, OnDestroy {
+  private readonly authService = inject(AuthService);
+  private readonly chatService = inject(ChatService);
+
   messageunSubscribe!: () => void;
   form = new FormGroup({
     message: new FormControl('', { nonNullable: true }),
   });
+
   user$ = this.authService.user$;
   messages$ = this.chatService.messages$;
-
-  constructor(
-    private authService: AuthService,
-    private chatService: ChatService
-  ) { }
 
   ngOnInit() {
     this.chatService.loadMessages();

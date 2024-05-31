@@ -13,13 +13,13 @@ import { AppwriteApi } from './appwrite';
   providedIn: 'root',
 })
 export class AuthService {
-  private appwriteAPI = inject(AppwriteApi);
+  private readonly appwriteAPI = inject(AppwriteApi);
+  private readonly router = inject(Router);
+
   private _user = new BehaviorSubject<any | null>(
     null
   );
   readonly user$ = this._user.asObservable();
-
-  constructor(private router: Router) { }
 
   login(name: string) {
     const authReq = this.appwriteAPI.account.createAnonymousSession();

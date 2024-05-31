@@ -4,7 +4,7 @@ import {
   Client as Appwrite,
   Databases
 } from 'appwrite';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.development';
 
 interface AppwriteConfig {
   endpoint: string;
@@ -30,19 +30,19 @@ export const AppwriteEnvironment = new InjectionToken<AppwriteConfig>(
 );
 
 export const AppwriteApi = new InjectionToken<{
-    database: Databases;
-    account: Account;
-  }>('Appwrite SDK', {
-    providedIn: 'root',
-    factory() {
-      const env = inject(AppwriteEnvironment);
-      const appwrite = new Appwrite();
-      appwrite.setEndpoint(env.endpoint);
-      appwrite.setProject(env.projectId);
-  
-      const database = new Databases(appwrite);
-      const account = new Account(appwrite);
-  
-      return { database, account };
-    },
-  });
+  database: Databases;
+  account: Account;
+}>('Appwrite SDK', {
+  providedIn: 'root',
+  factory() {
+    const env = inject(AppwriteEnvironment);
+    const appwrite = new Appwrite();
+    appwrite.setEndpoint(env.endpoint);
+    appwrite.setProject(env.projectId);
+
+    const database = new Databases(appwrite);
+    const account = new Account(appwrite);
+
+    return { database, account };
+  },
+});

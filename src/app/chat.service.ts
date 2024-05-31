@@ -4,6 +4,7 @@ import { BehaviorSubject, take, concatMap, filter } from 'rxjs';
 
 import { AppwriteApi, AppwriteEnvironment } from './appwrite';
 import { AuthService } from './auth.service';
+import { environment } from 'src/environments/environment.development';
 
 export type Message = Models.Document & {
   user: string;
@@ -65,9 +66,9 @@ export class ChatService {
 
   listenToMessages() {
     return this.appwriteAPI.database.client.subscribe(
-      `databases.chatdb.collections.messages.documents`,
+      `databases.${environment.databaseId}.collections.${environment.chatCollectionId}.documents`,
       (res: RealtimeResponseEvent<Message>) => {
-        if (res.events.includes('databases.chatdb.collections.messages.documents.*.create')) {
+        if (res.events.includes(`databases.${environment.databaseId}.collections.${environment.chatCollectionId}.documents.*.create`)) {
           const messages: Message[] = [...this._messages$.value, res.payload];
 
           this._messages$.next(messages);
