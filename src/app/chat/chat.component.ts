@@ -40,14 +40,13 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.loading$ = merge(
       this.send$.pipe(map(() => true)),
       this.messages$.pipe(map(() => false)),
-    ).pipe(startWith(true));
+    ).pipe(startWith(true), share());
   }
   ngOnDestroy() {
     this.chatService.stopWSConnection();
   }
   sendMessage() {
     this._send$.next(this.form.controls['message'].value);
-
     window.scrollTo(0, window.scrollY + 2000);
   }
 
