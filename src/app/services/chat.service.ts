@@ -63,7 +63,7 @@ export class ChatService {
 
   sendMessage(message: string) {
     return this.authService.user$.pipe(
-      debounceTime(500),
+      debounceTime(100),
       filter((user: any) => !!user),
       take(1),
       switchMap((user) => !user.name ? this.appwriteAPI.account.get() : user),

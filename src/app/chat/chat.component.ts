@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Observable, ReplaySubject, Subscription, map, merge, share, startWith, switchMap, tap } from 'rxjs';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Observable, ReplaySubject, map, merge, share, startWith, switchMap } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { ChatService, Message } from '../services/chat.service';
 
@@ -28,7 +28,6 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   send$ = this._send$.pipe(
     switchMap((message) => this.chatService.sendMessage(message)),
-    tap(() => this.form.reset()),
     share(),
   );
 
@@ -46,6 +45,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.chatService.stopWSConnection();
   }
   sendMessage() {
+    this.form.reset();
     this._send$.next(this.form.controls['message'].value);
     window.scrollTo(0, window.scrollY + 2000);
   }
