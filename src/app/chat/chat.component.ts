@@ -45,8 +45,9 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.chatService.stopWSConnection();
   }
   sendMessage() {
+    const message = this.form.controls['message'].value;
     this.form.reset();
-    this._send$.next(this.form.controls['message'].value);
+    this._send$.next(message);
     window.scrollTo(0, window.scrollY + 2000);
   }
 
