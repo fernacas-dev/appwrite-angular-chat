@@ -9,27 +9,52 @@
                     <label class="text-xl my-2" for="email">Email</label>
                     <input
                         class="w-full sm:w-[350px] h-12 rounded text-xl px-2 border-b-2 border-b-black focus:border-b-transparent bg-white"
-                        type="text" id="email" formControlName="email" placeholder="johndoe@gmail.com" />
+                        type="text" id="email" formControlName="email" placeholder="johndoe@gmail.com" [class.valid]="form.get('email')?.valid &&
+                        (form.get('email')?.dirty || form.get('email')?.touched)" [class.invalid]="form.get('email')?.invalid &&
+                        (form.get('email')?.dirty || form.get('email')?.touched)">
+                    @if(form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched))
+                    {
+                    <span class="text-lg text-red-400">Invalid Email</span>
+                    }
                 </div>
 
                 <div class="flex flex-col my-4">
                     <label class="text-xl my-2" for="name">Username</label>
                     <input
                         class="w-full sm:w-[350px] h-12 rounded text-xl px-2 border-b-2 border-b-black focus:border-b-transparent bg-white"
-                        type="text" id="name" formControlName="name" placeholder="johndoe" />
+                        type="text" id="name" formControlName="name" placeholder="johndoe" [class.valid]="form.get('name')?.valid &&
+                        (form.get('name')?.dirty || form.get('name')?.touched)" [class.invalid]="form.get('name')?.invalid &&
+                        (form.get('name')?.dirty || form.get('name')?.touched)">
+                    @if(form.get('name')?.invalid && (form.get('name')?.dirty || form.get('name')?.touched))
+                    {
+                    <span class="text-lg text-red-400">Invalid Username</span>
+                    }
                 </div>
                 <div class="flex flex-col my-4">
                     <label class="text-xl my-2" for="password">Password</label>
                     <input
                         class="w-full sm:w-[350px] h-12 rounded text-xl px-2 border-b-2 border-b-black focus:border-b-transparent bg-white"
-                        type="password" id="password" formControlName="password" />
+                        type="password" id="password" formControlName="password" [class.valid]="form.get('password')?.valid &&
+                        (form.get('password')?.dirty || form.get('password')?.touched)" [class.invalid]="form.get('password')?.invalid &&
+                        (form.get('password')?.dirty || form.get('password')?.touched)">
+                    @if(form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched))
+                    {
+                    <span class="text-lg text-red-400">Invalid Password</span>
+                    }
                 </div>
 
                 <div class="flex flex-col my-4">
                     <label class="text-xl my-2" for="confirmPassword">Confirm Password</label>
                     <input
                         class="w-full sm:w-[350px] h-12 rounded text-xl px-2 border-b-2 border-b-black focus:border-b-transparent bg-white"
-                        type="password" id="confirmPassword" formControlName="confirmPassword" />
+                        type="password" id="confirmPassword" formControlName="confirmPassword" [class.valid]="form.get('confirmPassword')?.valid &&
+                        (form.get('confirmPassword')?.dirty || form.get('confirmPassword')?.touched)" [class.invalid]="form.get('confirmPassword')?.invalid &&
+                        (form.get('confirmPassword')?.dirty || form.get('confirmPassword')?.touched)">
+                    @if(form.get('confirmPassword')?.invalid && (form.get('confirmPassword')?.dirty ||
+                    form.get('confirmPassword')?.touched))
+                    {
+                    <span class="text-lg text-red-400">Invalid Confirm Password</span>
+                    }
                 </div>
 
                 <div class="flex flex-row justify-end">
