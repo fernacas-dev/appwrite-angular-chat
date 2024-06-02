@@ -7,7 +7,6 @@ export const routes: Routes = [
         loadComponent: () =>
             import('./chat/chat.component').then((m) => m.ChatComponent),
         canActivate: [userLoggedGuard]
-        // CanActivateFn: [userLoggedGuard]
     },
     {
         path: 'register',
@@ -15,8 +14,12 @@ export const routes: Routes = [
             import('./register/register.component').then((m) => m.RegisterComponent),
     },
     {
-        path: '',
+        path: 'login',
         loadComponent: () =>
             import('./login/login.component').then((m) => m.LoginComponent),
     },
+    {
+        path: '**',
+        redirectTo: 'chat',
+    }
 ];

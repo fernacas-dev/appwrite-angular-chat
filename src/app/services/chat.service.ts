@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { ID, Models, Permission, RealtimeResponseEvent, Role } from 'appwrite';
-import { BehaviorSubject, take, concatMap, filter, tap, map, switchMap } from 'rxjs';
+import { ID, Models, Permission, Query, RealtimeResponseEvent, Role } from 'appwrite';
+import { BehaviorSubject, take, concatMap, filter, tap, map, switchMap, from, Observable, share, ReplaySubject } from 'rxjs';
 
 import { AppwriteApi, AppwriteEnvironment } from '../appwrite';
 import { AuthService } from './auth.service';
@@ -15,34 +15,55 @@ export type Message = Models.Document & {
   providedIn: 'root',
 })
 export class ChatService {
-  private appwriteAPI = inject(AppwriteApi);
-  private appwriteEnvironment = inject(AppwriteEnvironment);
+  private readonly appwriteAPI = inject(AppwriteApi);
+  private readonly appwriteEnvironment = inject(AppwriteEnvironment);
+  private readonly authService = inject(AuthService);
 
   private _messages$ = new BehaviorSubject<Message[]>([]);
-  readonly messages$ = this._messages$.asObservable();
+  readonly messages$ = this._messages$.asObservable().pipe(
+    switchMap(() => this.loadMessages()),
+    share(),
+  );
 
-  constructor(private authService: AuthService) { }
+  stopWSConnection!: () => void;
 
-  loadMessages() {
-    this.appwriteAPI.database
+  startWSConnection() {
+    this.stopWSConnection = this.appwriteAPI.database.client.subscribe(
+      `databases.${environment.databaseId}.collections.${environment.chatCollectionId}.documents`,
+      (res: RealtimeResponseEvent<Message>) => {
+        if (res.events.includes(`databases.${environment.databaseId}.collections.${environment.chatCollectionId}.documents.*.create`)) {
+          const messages: Message[] = [...this._messages$.value, res.payload];
+          this._messages$.next(messages);
+        }
+      }
+    );
+  }
+
+  loadMessages(): Observable<Message[]> {
+    return from(this.appwriteAPI.database
       .listDocuments<Message>(
         this.appwriteEnvironment.databaseId,
         this.appwriteEnvironment.chatCollectionId,
-        [],
-        /* 100,
-         0,
-         undefined,
-         undefined,
-         [],
-         ['ASC']*/
+        [
+          Query.limit(1000),
+          Query.orderAsc('$createdAt')
+        ]
+        // 100,
+        //  0,
+        //  undefined,
+        //  undefined,
+        //  [],
+        //  ['ASC']
+      ))
+      .pipe(
+        tap(() => console.log('getting messages')),
+        map((response) => response.documents),
       )
-      .then((response) => {
-        this._messages$.next(response.documents);
-      });
   }
 
   sendMessage(message: string) {
     return this.authService.user$.pipe(
+      tap(() => console.log('sending message')),
       filter((user: any) => !!user),
       take(1),
       switchMap((user) => !user.name ? this.appwriteAPI.account.get() : user),
@@ -61,20 +82,7 @@ export class ChatService {
             Permission.read(Role.any()),
           ]
         );
-      })
-    );
-  }
-
-  listenToMessages() {
-    return this.appwriteAPI.database.client.subscribe(
-      `databases.${environment.databaseId}.collections.${environment.chatCollectionId}.documents`,
-      (res: RealtimeResponseEvent<Message>) => {
-        if (res.events.includes(`databases.${environment.databaseId}.collections.${environment.chatCollectionId}.documents.*.create`)) {
-          const messages: Message[] = [...this._messages$.value, res.payload];
-
-          this._messages$.next(messages);
-        }
-      }
+      }),
     );
   }
 }

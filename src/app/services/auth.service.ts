@@ -7,6 +7,8 @@ import {
   from,
   map,
   Observable,
+  of,
+  switchMap,
   tap,
 } from 'rxjs';
 import { AppwriteApi } from '../appwrite';
@@ -23,7 +25,11 @@ export class AuthService {
   private _user = new BehaviorSubject<any | null>(
     null
   );
-  readonly user$ = from(this.appwriteAPI.account.getSession('current'));// this._user.asObservable();
+
+  readonly user$ = this._user.pipe(
+    switchMap(() => this.appwriteAPI.account.getSession('current')),
+    catchError(err => of(null)),
+  )
 
   login(loginDto: LoginDto) {
     const authReq = this.appwriteAPI.account.createEmailSession(loginDto.email, loginDto.password);
@@ -40,11 +46,7 @@ export class AuthService {
   }
 
   isLoggedIn(): Observable<boolean> {
-    return from(this.appwriteAPI.account.get())
-      .pipe(
-        tap(user => this._user.next(user)),
-        map((user) => true),
-        catchError(async (err) => { console.log(`error: ${JSON.stringify(err)}`); return false }));
+    return this.user$.pipe(map((user) => user === null ? false : true));
   }
 
   async logout() {
@@ -53,8 +55,8 @@ export class AuthService {
     } catch (e) {
       console.log(`${e}`);
     } finally {
-      this.router.navigate(['/']);
       this._user.next(null);
+      this.router.navigateByUrl('/login');
     }
   }
 }

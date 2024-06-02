@@ -34,12 +34,7 @@ export class LoginComponent {
       const loginDto = this.form.value as LoginDto;
       this.authService
         .login(loginDto)
-        .pipe(
-          tap(() => {
-            this.router.navigate(['/chat']);
-          })
-        )
-        .subscribe();
+        .subscribe(() => this.router.navigateByUrl('/chat'));
     }
   }
 }
