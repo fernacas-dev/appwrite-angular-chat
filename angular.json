@@ -59,12 +59,12 @@
           },
           "configurations": {
             "development": {
-              "buildOptimizer": false,
-              "optimization": false,
-              "vendorChunk": false,
+              "buildOptimizer": true,
+              "optimization": true,
+              "vendorChunk": true,
               "extractLicenses": true,
-              "sourceMap": true,
-              "namedChunks": true
+              "sourceMap": false,
+              "namedChunks": false
             }
           },
           "defaultConfiguration": "development"

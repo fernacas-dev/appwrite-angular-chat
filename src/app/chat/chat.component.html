@@ -1,7 +1,8 @@
 <div class="w-full" *ngIf="user$ | async as vm; else loading">
     <div class="flex flex-row justify-between outline-1 outline-black shadow">
         <div class="mx-6 mb-4 mt-2 text-3xl">Let's Chat</div>
-        <button class="mx-6 mt-2 mb-2 w-[125px] px-4 py-2 outline outline-1 rounded hover:outline-2" (click)="logout()">
+        <button class="mx-6 mt-2 mb-2 w-[125px] px-4 py-2 outline outline-1 rounded hover:outline-2"
+            aria-label="Leave Room" (click)="logout()">
             Leave Room</button>
     </div>
 
@@ -41,7 +42,7 @@
             <input
                 class="w-full h-12 rounded text-xl px-2 border-b-2 border-b-black focus:border-b-transparent bg-white disabled:border-b-gray"
                 type="text" formControlName="message" placeholder="Type a message..." />
-            <button type="submit"
+            <button type="submit" aria-label="Send Message"
                 class="flex flex-row justify-center p-2 pt-3 mt-0 rounded shadow align-middle bg-[#fd356e] cursor-pointer disabled:bg-gray-400 disabled:cursor-none"
                 [disabled]="form.invalid">
                 <svg class="arrow" width="24" height="24" viewBox="0 0 24 24" fill="none"
