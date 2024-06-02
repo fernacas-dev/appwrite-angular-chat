@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { ID, Models, Permission, Query, RealtimeResponseEvent, Role } from 'appwrite';
-import { BehaviorSubject, take, concatMap, filter, tap, map, switchMap, from, Observable, share, ReplaySubject } from 'rxjs';
+import { BehaviorSubject, take, concatMap, filter, tap, map, switchMap, from, Observable, share, ReplaySubject, debounceTime } from 'rxjs';
 
 import { AppwriteApi, AppwriteEnvironment } from '../appwrite';
 import { AuthService } from './auth.service';
@@ -63,7 +63,7 @@ export class ChatService {
 
   sendMessage(message: string) {
     return this.authService.user$.pipe(
-      tap(() => console.log('sending message')),
+      debounceTime(500),
       filter((user: any) => !!user),
       take(1),
       switchMap((user) => !user.name ? this.appwriteAPI.account.get() : user),
