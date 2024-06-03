@@ -64,10 +64,10 @@
           },
           "configurations": {
             "development": {
-              "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true
+              "optimization": true,
+              "extractLicenses": true,
+              "sourceMap": false,
+              "namedChunks": false
             }
           },
           "defaultConfiguration": "development"
