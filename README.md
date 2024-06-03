@@ -1,5 +1,8 @@
 # Angular Chat Application with Appwrite as Backend
 
+<img src="chat-1.png" alt="drawing" width="500"/>
+<img src="chat-2.png" alt="drawing" width="500"/>
+
 ## Table of Contents
 - [Overview](#overview)
 - [Features](#features)
