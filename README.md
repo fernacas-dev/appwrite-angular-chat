@@ -56,6 +56,7 @@ COLLECTION_ID=messages-collection
 
 ### Create messages collection
 Create a new collection in your database to store messages, the collection will have the following fields:
+<br>
     - user: string
     - message: string
 
