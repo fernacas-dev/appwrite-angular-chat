@@ -18,6 +18,7 @@
     "@angular/platform-browser": "^18.0.1",
     "@angular/platform-browser-dynamic": "^18.0.1",
     "@angular/router": "^18.0.1",
+    "@types/node": "^20.14.0",
     "appwrite": "^10.2.0",
     "dotenv": "^16.4.5",
     "ngx-toastr": "^19.0.0",
@@ -32,7 +33,4 @@
     "tailwindcss": "^3.4.3",
     "typescript": "~5.4.5"
   },
-  "engines": {
-    "node": "20.12.2"
-  }
 }
