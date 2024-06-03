@@ -50,8 +50,8 @@
                         type="password" id="confirmPassword" formControlName="confirmPassword" [class.valid]="form.get('confirmPassword')?.valid &&
                         (form.get('confirmPassword')?.dirty || form.get('confirmPassword')?.touched)" [class.invalid]="form.get('confirmPassword')?.invalid &&
                         (form.get('confirmPassword')?.dirty || form.get('confirmPassword')?.touched)">
-                    @if(form.get('confirmPassword')?.invalid && (form.get('confirmPassword')?.dirty ||
-                    form.get('confirmPassword')?.touched))
+                    @if( form.get('confirmPassword')?.errors?.['passwordMismatch'] &&
+                    form.get('confirmPassword')?.touched)
                     {
                     <span class="text-lg text-red-400">Invalid Confirm Password</span>
                     }

@@ -14,6 +14,7 @@ import {
 import { AppwriteApi } from '../appwrite';
 import { LoginDto, RegisterDto } from '../models/login.model';
 import { ID } from 'appwrite';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,7 @@ import { ID } from 'appwrite';
 export class AuthService {
   private readonly appwriteAPI = inject(AppwriteApi);
   private readonly router = inject(Router);
+  private readonly toastr = inject(ToastrService);
 
   private _user = new BehaviorSubject<any | null>(
     null
@@ -36,13 +38,21 @@ export class AuthService {
 
     return from(authReq).pipe(
       concatMap(() => this.appwriteAPI.account.get()),
-      tap((user: any) => this._user.next(user))
+      tap((user: any) => this._user.next(user)),
+      catchError(err => {
+        this.toastr.error(err.message);
+        return err;
+      }),
     );
   }
 
   register(registerDto: RegisterDto) {
     const authReq = this.appwriteAPI.account.create(ID.unique(), registerDto.email, registerDto.password, registerDto.name);
-    return from(authReq);
+    return from(authReq).pipe(
+      catchError(err => {
+        this.toastr.error(err.message);
+        return err;
+      }),);
   }
 
   isLoggedIn(): Observable<boolean> {
@@ -54,6 +64,7 @@ export class AuthService {
       await this.appwriteAPI.account.deleteSession('current');
     } catch (e) {
       console.log(`${e}`);
+      this.toastr.error(e as string);
     } finally {
       this._user.next(null);
       this.router.navigateByUrl('/login');
