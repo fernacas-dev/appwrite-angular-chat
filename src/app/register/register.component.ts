@@ -36,7 +36,6 @@ function passwordMatchValidator(password: string, confirmPassword: string): Vali
     return null;
   };
 }
-
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -49,13 +48,11 @@ export class RegisterComponent {
 
   private readonly formBuilder = inject(FormBuilder);
 
-
   form: FormGroup = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
     name: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
     password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
-    // confirmPassword: ['', [Validators.email], confirmPasswordValidator],
-    confirmPassword: ['', [Validators.email]],
+    confirmPassword: ['', [Validators.required]],
   }, { validator: passwordMatchValidator('password', 'confirmPassword') });
 
   register() {
