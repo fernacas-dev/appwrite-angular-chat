@@ -1,40 +1,40 @@
-<div class="sm:container flex flex-row justify-center mx-1 sm:mx-auto my-4 sm:my-12">
+<div class="sm:container flex flex-row justify-center mx-1 sm:mx-auto my-4 sm:my-12 bg-bg-light dark:bg-bg-dark min-h-screen">
     <div class="my-12">
-        <h1 class="text-3xl text-center">Appwrite Chat</h1>
+        <h1 class="text-4xl font-bold text-center text-blue-futuristic my-6">Appwrite Chat</h1>
         <div
-            class="mt-2 mb-2 sm:mt-12 sm:mb-4 outline-gray-500 p-4 sm:p-12 pt-2 px-4 sm:px-12 rounded outline outline-1">
-            <span class="text-2xl text-center mb-2">Login</span>
+            class="mt-2 mb-2 sm:mt-12 sm:mb-4 p-8 sm:p-16 pt-6 px-8 sm:px-16 rounded-lg shadow-lg bg-white dark:bg-gray-dark border border-gray-medium text-text-dark dark:text-text-light">
+            <h2 class="text-2xl font-semibold text-center mb-8 block text-blue-futuristic dark:text-text-light">Login</h2>
             <form [formGroup]="form" (ngSubmit)="login()">
                 <div class="flex flex-col my-4">
-                    <label class="text-xl my-2" for="email">Email</label>
+                    <label class="text-lg font-medium my-2 text-gray-dark dark:text-text-light" for="email">Email</label>
                     <input
-                        class="w-full sm:w-[350px] h-12 rounded text-xl px-2 border-b-2 border-b-black focus:border-b-transparent bg-white"
+                        class="w-full sm:w-[350px] h-12 rounded-md text-lg px-4 border-2 border-gray-medium focus:border-blue-futuristic focus:ring-1 focus:ring-blue-futuristic bg-white dark:bg-gray-medium text-text-dark dark:text-text-light"
                         type="text" id="email" formControlName="email" placeholder="johndoe@gmail.com" [class.valid]="form.get('email')?.valid &&
                         (form.get('email')?.dirty || form.get('email')?.touched)" [class.invalid]="form.get('email')?.invalid &&
                         (form.get('email')?.dirty || form.get('email')?.touched)">
                     @if(form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched))
                     {
-                    <span class="text-lg text-red-400">Invalid Email</span>
+                    <span class="text-md font-medium text-red-500 mt-1">Invalid Email</span>
                     }
                 </div>
                 <div class="flex flex-col my-4">
                     <label class="text-xl my-2" for="password">Password</label>
                     <input
-                        class="w-full sm:w-[350px] h-12 rounded text-xl px-2 border-b-2 border-b-black focus:border-b-transparent bg-white"
+                        class="w-full sm:w-[350px] h-12 rounded-md text-lg px-4 border-2 border-gray-medium focus:border-blue-futuristic focus:ring-1 focus:ring-blue-futuristic bg-white dark:bg-gray-medium text-text-dark dark:text-text-light"
                         type="password" id="password" formControlName="password" [class.valid]="form.get('password')?.valid &&
                         (form.get('[password]')?.dirty || form.get('password')?.touched)" [class.invalid]="form.get('password')?.invalid &&
                         (form.get('password')?.dirty || form.get('password')?.touched)">
                     @if(form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched))
                     {
-                    <span class="text-lg text-red-400">Invalid Password</span>
+                    <span class="text-md font-medium text-red-500 mt-1">Invalid Password</span>
                     }
                 </div>
 
-                <div class="flex flex-row justify-end">
+                <div class="flex flex-row justify-between mt-10">
                     <a [routerLink]="['/register']" aria-label="Register"
-                        class="mx-6 mt-8 mb-4 w-[125px] px-4 py-2 outline outline-1 rounded hover:outline-2 text-center">Register</a>
+                        class="mr-4 w-[125px] border-2 border-blue-futuristic rounded-md px-4 py-3 text-blue-futuristic font-medium hover:bg-blue-futuristic hover:text-white text-center transition-all duration-300 shadow-sm">Register</a>
                     <button type="submit" aria-label="Login"
-                        class="mx-0 mt-8 mb-4 w-[125px] px-4 py-2 outline outline-1 rounded hover:outline-2 text-center">Login</button>
+                        class="w-[125px] bg-blue-futuristic hover:bg-blue-futuristic/80 text-white rounded-md px-4 py-3 font-medium text-center transition-all duration-300 shadow-md">Login</button>
                 </div>
             </form>
         </div>

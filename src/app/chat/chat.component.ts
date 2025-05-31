@@ -4,18 +4,28 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Observable, ReplaySubject, map, merge, share, startWith, switchMap } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { ChatService, Message } from '../services/chat.service';
+import { ThemeService } from '../services/theme.service';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './chat.component.html',
-  styleUrl: './chat.component.scss',
+  styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent implements OnInit, OnDestroy {
   private readonly authService = inject(AuthService);
   private readonly chatService = inject(ChatService);
   private readonly formBuilder = inject(FormBuilder);
+  private readonly themeService = inject(ThemeService);
+
+  toggleDarkMode() {
+    this.themeService.toggleDarkMode();
+  }
+
+  isDarkMode() {
+    return this.themeService.darkMode$;
+  };
 
   form: FormGroup = this.formBuilder.group({
     message: ['', [Validators.required]],
